@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Read It Later</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📖 Read It Later</h1>
+      <button id="saveBtn" class="btn btn-primary">+ 儲存此頁面</button>
+    </header>
+
+    <div id="notification" class="notification hidden"></div>
+
+    <div class="toolbar">
+      <input type="text" id="searchInput" placeholder="搜尋已儲存的頁面..." />
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="unread">未讀</button>
+        <button class="filter-btn" data-filter="read">已讀</button>
+      </div>
+    </div>
+
+    <div id="itemList" class="item-list">
+      <!-- Items rendered by JS -->
+    </div>
+
+    <div id="emptyState" class="empty-state hidden">
+      <p>📭 目前沒有儲存的頁面</p>
+      <p class="hint">點擊上方按鈕儲存目前的網頁</p>
+    </div>
+
+    <footer>
+      <span id="itemCount">0 個項目</span>
+      <button id="clearAllBtn" class="btn btn-danger btn-small">清除全部</button>
+    </footer>
+  </div>
+
+  <script src="read-it-later.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Icons</title></head>
+<body>
+<h2>Right-click each image below → "Save image as" to save as PNG</h2>
+<p>Save them to the <code>icons/</code> folder with the corresponding filename.</p>
+<div id="output"></div>
+<script>
+const sizes = [16, 32, 48, 128];
+const output = document.getElementById("output");
+
+sizes.forEach(size => {
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+
+  // Background
+  const r = size * 0.15;
+  ctx.beginPath();
+  ctx.moveTo(r, 0);
+  ctx.lineTo(size - r, 0);
+  ctx.quadraticCurveTo(size, 0, size, r);
+  ctx.lineTo(size, size - r);
+  ctx.quadraticCurveTo(size, size, size - r, size);
+  ctx.lineTo(r, size);
+  ctx.quadraticCurveTo(0, size, 0, size - r);
+  ctx.lineTo(0, r);
+  ctx.quadraticCurveTo(0, 0, r, 0);
+  ctx.closePath();
+  ctx.fillStyle = "#4A90D9";
+  ctx.fill();
+
+  // Book icon
+  ctx.fillStyle = "#FFFFFF";
+  const m = size * 0.2;
+  const bw = size * 0.6;
+  const bh = size * 0.55;
+  const by = size * 0.18;
+
+  // Left page
+  ctx.beginPath();
+  ctx.moveTo(size / 2, by + bh * 0.15);
+  ctx.lineTo(m, by);
+  ctx.lineTo(m, by + bh);
+  ctx.lineTo(size / 2, by + bh + bh * 0.08);
+  ctx.closePath();
+  ctx.fill();
+
+  // Right page
+  ctx.beginPath();
+  ctx.moveTo(size / 2, by + bh * 0.15);
+  ctx.lineTo(size - m, by);
+  ctx.lineTo(size - m, by + bh);
+  ctx.lineTo(size / 2, by + bh + bh * 0.08);
+  ctx.closePath();
+  ctx.fill();
+
+  // Bookmark ribbon
+  ctx.fillStyle = "#FFD700";
+  const rw = size * 0.08;
+  const rx = size * 0.62;
+  const ry = by;
+  const rh = bh * 0.5;
+  ctx.beginPath();
+  ctx.moveTo(rx, ry);
+  ctx.lineTo(rx + rw, ry);
+  ctx.lineTo(rx + rw, ry + rh);
+  ctx.lineTo(rx + rw / 2, ry + rh - rw * 0.6);
+  ctx.lineTo(rx, ry + rh);
+  ctx.closePath();
+  ctx.fill();
+
+  const img = new Image();
+  img.src = canvas.toDataURL("image/png");
+  img.style.margin = "10px";
+  img.style.border = "1px solid #ccc";
+
+  const label = document.createElement("div");
+  label.innerHTML = `<strong>icon${size}.png</strong> (${size}x${size})`;
+
+  const container = document.createElement("div");
+  container.style.display = "inline-block";
+  container.style.textAlign = "center";
+  container.style.margin = "16px";
+  container.appendChild(img);
+  container.appendChild(label);
+
+  // Auto download link
+  const link = document.createElement("a");
+  link.href = canvas.toDataURL("image/png");
+  link.download = `icon${size}.png`;
+  link.textContent = `Download icon${size}.png`;
+  link.style.display = "block";
+  container.appendChild(link);
+
+  output.appendChild(container);
+});
+</script>
+</body>
+</html>
