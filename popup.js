@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!tab || !tab.url) {
-        showNotification("無法取得頁面資訊", "error");
+        showNotification("Unable to get page info", "error");
         return;
       }
 
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.url.startsWith("edge://") ||
         tab.url.startsWith("about:")
       ) {
-        showNotification("無法儲存瀏覽器內部頁面", "warning");
+        showNotification("Cannot save browser internal pages", "warning");
         return;
       }
 
@@ -43,13 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (result.success) {
-        showNotification("已儲存！", "success");
+        showNotification("Saved!", "success");
         renderList();
       } else if (result.reason === "already_saved") {
-        showNotification("此頁面已經儲存過了", "warning");
+        showNotification("This page is already saved", "warning");
       }
     } catch (err) {
-      showNotification("儲存失敗，請重試", "error");
+      showNotification("Save failed, please try again", "error");
     }
   });
 
@@ -73,10 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const count = (await ReadItLater.getAll()).length;
     if (count === 0) return;
 
-    if (confirm(`確定要清除全部 ${count} 個項目嗎？`)) {
+    if (confirm(`Are you sure you want to clear all ${count} items?`)) {
       await ReadItLater.clearAll();
       renderList();
-      showNotification("已清除全部項目", "success");
+      showNotification("All items cleared", "success");
     }
   });
 
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update count
     const allItems = await ReadItLater.getAll();
     const unreadCount = allItems.filter((i) => !i.isRead).length;
-    itemCount.textContent = `${allItems.length} 個項目（${unreadCount} 未讀）`;
+    itemCount.textContent = `${allItems.length} items (${unreadCount} unread)`;
 
     // Toggle empty state
     if (items.length === 0) {
@@ -140,8 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="item-meta">${escapeHTML(dateStr)} · ${escapeHTML(getDomain(item.url))}</div>
         </div>
         <div class="item-actions">
-          <button class="icon-btn" data-action="toggle" title="${item.isRead ? "標為未讀" : "標為已讀"}">${item.isRead ? "📖" : "✅"}</button>
-          <button class="icon-btn" data-action="delete" title="刪除">🗑️</button>
+          <button class="icon-btn" data-action="toggle" title="${item.isRead ? "Mark as unread" : "Mark as read"}">${item.isRead ? "📖" : "✅"}</button>
+          <button class="icon-btn" data-action="delete" title="Delete">🗑️</button>
         </div>
       </div>
     `;
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const id = btn.closest(".item").dataset.id;
         await ReadItLater.remove(id);
         renderList();
-        showNotification("已刪除", "success");
+        showNotification("Deleted", "success");
       });
     });
   }
